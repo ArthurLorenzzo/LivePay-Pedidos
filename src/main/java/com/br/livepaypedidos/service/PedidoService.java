@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
@@ -47,22 +48,18 @@ public class PedidoService {
     public LerPedidoDTO criarPedido(CriarPedidoDTO pedidoDTO){
 
         if (pedidoDTO == null){throw new RequiredObjectIsNullException();}
-        var pedidoCriado = new Pedidos();
-        BeanUtils.copyProperties(pedidoDTO, pedidoCriado, "produtos_id");
-        List<Produto> listaProduto = pedidoDTO
-                .getProdutos_id()
-                .stream()
-                .map(idProduto -> {
-                    var produto = produtoRepository.findById(idProduto)
-                            .orElseThrow(ResourceNotFoundException::new);
-                    return produto;
-                }).toList();
-        pedidoCriado.setProduto(listaProduto);
 
-        LerPedidoDTO lerPedidoDTO = new LerPedidoDTO();
-        pedidoCriado = pedidoRepository.save(pedidoCriado);
-        BeanUtils.copyProperties(pedidoCriado, lerPedidoDTO);
-        return lerPedidoDTO;
+        Pedidos pedidoCriado = modelMapper.map(pedidoDTO, Pedidos.class);
+        pedidoCriado.setProduto(
+                pedidoDTO.getProdutos_id()
+                        .stream()
+                        .map(idProduto -> produtoRepository.findById(idProduto)
+                                .orElseThrow(ResourceNotFoundException::new))
+                        .collect(Collectors.toList())
+        );
+
+        return modelMapper.map(pedidoRepository.save(pedidoCriado), LerPedidoDTO.class);
+
     }
 
 }

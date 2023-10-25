@@ -38,4 +38,16 @@ public class ProdutoController {
         return ResponseEntity.ok(pagamento);
     }
 
+    @PutMapping
+    public ResponseEntity<ProdutoDTO> atualizar(@PathVariable @NotNull Long id, @RequestBody @Valid ProdutoDTO dto) {
+        ProdutoDTO atualizado = produtoService.atualizarProduto(id, dto);
+        return ResponseEntity.ok(atualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProdutoDTO> remover(@PathVariable @NotNull Long id) {
+        produtoService.excluirProduto(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

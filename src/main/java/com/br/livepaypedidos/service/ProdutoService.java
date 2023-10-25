@@ -39,4 +39,15 @@ public class ProdutoService {
         return modelMapper.map(produto, ProdutoDTO.class);
     }
 
+    public ProdutoDTO atualizarProduto(Long id, ProdutoDTO dto) {
+        Produto produto = modelMapper.map(dto, Produto.class);
+        produto.setId(id);
+        produto = produtoRepository.save(produto);
+        return modelMapper.map(produto, ProdutoDTO.class);
+    }
+
+    public void excluirProduto(Long id) {
+        produtoRepository.deleteById(id);
+    }
+
 }

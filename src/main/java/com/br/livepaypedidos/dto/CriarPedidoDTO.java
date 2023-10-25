@@ -1,5 +1,6 @@
 package com.br.livepaypedidos.dto;
 
+import com.br.livepaypedidos.model.Pessoa;
 import com.br.livepaypedidos.model.Produto;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
@@ -16,6 +17,8 @@ import java.util.List;
 public class CriarPedidoDTO {
 
     private Long id;
+
+    private Long pessoa_id;
 
     private List<Long> produtos_id;
 

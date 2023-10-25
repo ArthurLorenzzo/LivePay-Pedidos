@@ -1,37 +1,32 @@
 package com.br.livepaypedidos.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "pedidos")
+@Table(name = "pessoas")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pedidos {
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    @ManyToOne
-    private Pessoa pessoa;
+    private String nome;
 
-    @ManyToMany
-    @JoinColumn(name = "produtos_id")
-    @NotNull
-    private List<Produto> produto;
+    @Column
+    private String email;
 
-
+    @Column
+    private String cpf;
 
 }

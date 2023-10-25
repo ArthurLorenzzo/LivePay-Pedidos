@@ -39,4 +39,11 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoCriado);
     }
 
+    @PostMapping("/carrinho")
+    public ResponseEntity<LerPedidoDTO> carrinho(@RequestBody @Valid LerPedidoDTO dto) {
+        var pedidoCriado = pedidoService.carrinhoPedido(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoCriado);
+    }
+
+
 }

@@ -32,6 +32,14 @@ public class Produto {
 
     @Column
     @NotNull
-    private Integer quantidade;
+    private Long quantidade;
 
+    @Column
+    @NotNull
+    @OneToOne
+    private Estoque estoque;
+
+    public Long calcularDecrecimoEstoque(Produto produto){
+        return produto.getEstoque().getQuantidadeProduto() - produto.getQuantidade();
+    }
 }

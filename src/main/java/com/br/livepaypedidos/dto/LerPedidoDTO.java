@@ -1,5 +1,6 @@
 package com.br.livepaypedidos.dto;
 
+import com.br.livepaypedidos.model.Pessoa;
 import com.br.livepaypedidos.model.Produto;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,8 @@ import java.util.List;
 public class LerPedidoDTO {
 
     private Long id;
+
+    private Pessoa pessoa;
 
     private List<Produto> produto;
 

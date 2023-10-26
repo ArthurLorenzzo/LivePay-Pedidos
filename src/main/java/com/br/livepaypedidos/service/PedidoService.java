@@ -71,26 +71,24 @@ public class PedidoService {
     }
 
 
-    public LerPedidoDTO compraPedido(LerPedidoDTO dto) {
+    public Produto comprarProduto(LerPedidoDTO dto) {
         if (dto == null){throw new RequiredObjectIsNullException();}
+
         List<Produto> produtos = dto.getProduto();
-        Produto produtoExistente = new Produto();
-        Estoque estoque = new Estoque();
-        modelMapper.map(dto, produtoExistente);
-
-
+        List<Produto> temp = new ArrayList<>();
 
         for (Produto produto : produtos){
            if (produto.getEstoque().getQuantidadeProduto() > produto.getQuantidade()){
-                produto.calcularDecrecimoEstoque(produto);
-                produto.getEstoque().setQuantidadeProduto(produto.getEstoque().getQuantidadeProduto() - produto.getQuantidade());
-                produtoExistente.setQuantidade(produtos);
-
+               produto.getEstoque().calcularDecrecimo(produto);
+               //produto.getEstoque().setQuantidadeProduto(produto.calcularDecrecimo(produto));
+               //produto.getEstoque().setQuantidadeProduto(produto.getEstoque().getQuantidadeProduto() - produto.getQuantidade());
+               temp.add(produto);
            }
         }
 
-        Pedidos pedidoAtualizado = pedidoRepository.save(produtoExistente);
 
-        return modelMapper.map(pedidoAtualizado, LerPedidoDTO.class);
+        List<Produto> pedidoAtualizado = produtoRepository.saveAll(temp);
+
+        return modelMapper.map(pedidoAtualizado, Produto.class);
     }
 }

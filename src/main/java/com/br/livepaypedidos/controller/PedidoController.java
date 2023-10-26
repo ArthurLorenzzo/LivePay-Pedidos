@@ -2,6 +2,7 @@ package com.br.livepaypedidos.controller;
 
 import com.br.livepaypedidos.dto.CriarPedidoDTO;
 import com.br.livepaypedidos.dto.LerPedidoDTO;
+import com.br.livepaypedidos.model.Produto;
 import com.br.livepaypedidos.service.PedidoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -39,11 +40,9 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoCriado);
     }
 
-    @PostMapping("/carrinho")
-    public ResponseEntity<LerPedidoDTO> carrinho(@RequestBody @Valid LerPedidoDTO dto) {
-        var pedidoCriado = pedidoService.carrinhoPedido(dto);
+    @PostMapping("/comprar")
+    public ResponseEntity<Produto> comprarProduto(@RequestBody @Valid LerPedidoDTO dto) {
+        var pedidoCriado = pedidoService.comprarProduto(dto);
         return ResponseEntity.status(HttpStatus.OK).body(pedidoCriado);
     }
-
-
 }

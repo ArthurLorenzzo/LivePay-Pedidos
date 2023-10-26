@@ -19,12 +19,9 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Produto produtos;
-
     private Long quantidadeProduto;
 
-
-
-
+    public void calcularDecrecimo(Produto produto){
+         setQuantidadeProduto(produto.getEstoque().getQuantidadeProduto() - produto.getQuantidade());
+    }
 }

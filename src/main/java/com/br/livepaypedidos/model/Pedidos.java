@@ -23,8 +23,9 @@ public class Pedidos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+
     @ManyToOne
+    @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
     @ManyToMany

@@ -18,6 +18,8 @@ public class CriarPedidoDTO {
 
     private Long id;
 
+    private Double total;
+
     private Long pessoa_id;
 
     private List<Long> produtos_id;

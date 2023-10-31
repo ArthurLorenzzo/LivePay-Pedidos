@@ -14,6 +14,8 @@ public class LerPedidoDTO {
 
     private Long id;
 
+    private Double total;
+
     private Pessoa pessoa;
 
     private List<Produto> produto;

@@ -2,10 +2,8 @@ package com.br.livepaypedidos.service;
 
 import com.br.livepaypedidos.dto.CriarPedidoDTO;
 import com.br.livepaypedidos.dto.LerPedidoDTO;
-import com.br.livepaypedidos.dto.ProdutoDTO;
 import com.br.livepaypedidos.exceptions.RequiredObjectIsNullException;
 import com.br.livepaypedidos.exceptions.ResourceNotFoundException;
-import com.br.livepaypedidos.model.Estoque;
 import com.br.livepaypedidos.model.Pedidos;
 import com.br.livepaypedidos.model.Produto;
 import com.br.livepaypedidos.repository.PedidoRepository;
@@ -18,8 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,29 +64,45 @@ public class PedidoService {
         pedidoCriado.setPessoa(pessoaRepository.findById(pedidoDTO.getPessoa_id())
                 .orElseThrow(ResourceNotFoundException::new));
 
+        pedidoCriado.setTotal(calcularValorTotal(pedidoCriado));
+
         return modelMapper.map(pedidoRepository.save(pedidoCriado), LerPedidoDTO.class);
 
     }
 
+    public double calcularValorTotal(Pedidos pedido) {
+        double valorTotal = 0.0;
 
-    public Produto comprarProduto(LerPedidoDTO dto) {
-        if (dto == null){throw new RequiredObjectIsNullException();}
-
-        List<Produto> produtos = dto.getProduto();
-        List<Produto> temp = new ArrayList<>();
-
-        for (Produto produto : produtos){
-           if (produto.getEstoque().getQuantidadeProduto() > produto.getQuantidade()){
-               produto.getEstoque().calcularDecrecimo(produto);
-               //produto.getEstoque().setQuantidadeProduto(produto.calcularDecrecimo(produto));
-               //produto.getEstoque().setQuantidadeProduto(produto.getEstoque().getQuantidadeProduto() - produto.getQuantidade());
-               temp.add(produto);
-           }
+        if (pedido.getProduto() != null) {
+            for (Produto produto : pedido.getProduto()) {
+                valorTotal += produto.getValor();
+            }
         }
 
-
-        List<Produto> pedidoAtualizado = produtoRepository.saveAll(temp);
-
-        return modelMapper.map(pedidoAtualizado, Produto.class);
+        return valorTotal;
     }
+
+
+//    public Produto comprarProduto(LerPedidoDTO dto) {
+//        if (dto == null){throw new RequiredObjectIsNullException();}
+//
+//        List<Produto> produtos = dto.getProduto();
+//        List<Produto> temp = new ArrayList<>();
+//
+//        for (Produto produto : produtos){
+//           if (produto.getEstoque().getQuantidadeProduto() > produto.getQuantidade()){
+//               produto.getEstoque().calcularDecrecimo(produto);
+//               //produto.getEstoque().setQuantidadeProduto(produto.calcularDecrecimo(produto));
+//               //produto.getEstoque().setQuantidadeProduto(produto.getEstoque().getQuantidadeProduto() - produto.getQuantidade());
+//               temp.add(produto);
+//           }
+//        }
+//
+//
+//        List<Produto> pedidoAtualizado = produtoRepository.saveAll(temp);
+//
+//        return modelMapper.map(pedidoAtualizado, Produto.class);
+//    }
+
+
 }

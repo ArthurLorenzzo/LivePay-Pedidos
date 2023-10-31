@@ -28,15 +28,13 @@ public class Produto {
 
     @Column
     @NotNull
-    private BigDecimal valor;
+    private Double valor;
 
-    @Column
-    @NotNull
-    private Long quantidade;
-
-
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private Estoque estoque;
+//    @Column
+//    @NotNull
+//    private Integer quantidade;
+//
+//    @Column
+//    private Integer quantidadeNoCarrinho;
 
 }

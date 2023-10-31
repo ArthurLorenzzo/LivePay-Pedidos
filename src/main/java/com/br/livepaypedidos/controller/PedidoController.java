@@ -40,9 +40,9 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoCriado);
     }
 
-    @PostMapping("/comprar")
-    public ResponseEntity<Produto> comprarProduto(@RequestBody @Valid LerPedidoDTO dto) {
-        var pedidoCriado = pedidoService.comprarProduto(dto);
-        return ResponseEntity.status(HttpStatus.OK).body(pedidoCriado);
-    }
+//    @PostMapping("/comprar")
+//    public ResponseEntity<Produto> comprarProduto(@RequestBody @Valid LerPedidoDTO dto) {
+//        var pedidoCriado = pedidoService.comprarProduto(dto);
+//        return ResponseEntity.status(HttpStatus.OK).body(pedidoCriado);
+//    }
 }

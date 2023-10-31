@@ -15,6 +15,8 @@ public class ProdutoDTO {
 
     private BigDecimal valor;
 
-    private Integer quantidade;
+    //private Integer quantidade;
+
+    //private Integer quantidadeNoCarrinho;
 
 }
